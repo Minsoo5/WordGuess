@@ -31,7 +31,7 @@ public class GameLoop {
                 if (selection == 'Y') {
                     System.out.println("Lets Play!");
 
-                    //runGame();
+                    runGame();
 
 
                 } else if (selection == 'Q') {
@@ -56,50 +56,75 @@ public class GameLoop {
         String correctWord = "";
         boolean wordGuessed = false;
         boolean minusPressed = false;
-        char userInput;
+        Character userInput;
         int numberOfTries = 0;
         int triesAllowed;
 
-        //Word bank to choose a word from
-        String[] wordBank = {"Chocolate", "Midnight", "Chevy", "Keyboard", "Camera"};
 
-        correctWord = wordBank[random.nextInt(0, 4)];
+        //Word bank to choose a word from
+        String[] wordBank = {"CHOCOLATE", "MIDNIGHT", "PICTURE", "CAMERA", "CHEVY"};
+
+        //Taking the selected word and turning it into an ArrayList of char to compare user input to
+
+        correctWord = wordBank[random.nextInt(wordBank.length)];
         triesAllowed = correctWord.length();
 
-        //Taking the selected word and turning it into an array of char to compare user input to
+        //ArrayList<Character> letters = new ArrayList<>();
+        char[] stringToChar = correctWord.toCharArray();
+       // char[] stringToChar = new char[correctWord.length()];
 
-        ArrayList<Character> letters = new ArrayList<>();
 
-        for (char character : )
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < correctWord.length(); i++) {
+            sb.append("_");
+        }
 
         //Gameplay Loop
 
-        while (numberOfTries < triesAllowed && wordGuessed != true && minusPressed != true) {
+        
 
-            System.out.printf("You have %d tries left!", triesAllowed);
+        while (numberOfTries < triesAllowed && minusPressed != true) {
+
+            System.out.printf("You have %d tries left! \n", triesAllowed);
             System.out.println("Guess a letter!");
-            userInput = sc.nextLine().charAt(0);
+            System.out.println(sb);
+            userInput = Character.toUpperCase(sc.nextLine().charAt(0));
 
-            for (int i = 0; i < letters.length - 1; i++) {
-                if (userInput == letters[i]) {
-                    System.out.println("Nice!");
+            if (correctWord.contains(userInput.toString())) {
+
+                for (int i = 0; i < correctWord.length(); i++) {
+                    if (userInput == correctWord.charAt(i)) {
+                        sb.replace(i, i + 1, userInput.toString());
+
+                    }
                 }
+                triesAllowed --;
 
-            }
-
-
-            if (userInput == ) {
+                } else if (!correctWord.contains(userInput.toString())) {
+                System.out.println("Wrong Guess! Try Again!");
+                triesAllowed --;
 
             } else if (userInput == '-') {
                 minusPressed = true;
             }
+
+
+        }
+
+        while (numberOfTries >= triesAllowed) {
+            System.out.println("G A M E   O V E R");
+            System.out.println("You have used up all of your chances!");
+            System.out.println("Press any key to restart");
+            userInput = sc.nextLine().charAt(0);
+
+            GameLoop.start();
 
         }
 
 
 
     }
-
 
 
 
