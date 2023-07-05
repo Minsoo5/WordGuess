@@ -82,14 +82,14 @@ public class GameLoop {
 
         //Gameplay Loop
 
-        
-
-        while (numberOfTries < triesAllowed && minusPressed != true) {
+        while (numberOfTries < triesAllowed && wordGuessed != true && minusPressed != true) {
 
             System.out.printf("You have %d tries left! \n", triesAllowed);
             System.out.println("Guess a letter!");
             System.out.println(sb);
             userInput = Character.toUpperCase(sc.nextLine().charAt(0));
+
+
 
             if (correctWord.contains(userInput.toString())) {
 
@@ -98,16 +98,28 @@ public class GameLoop {
                         sb.replace(i, i + 1, userInput.toString());
 
                     }
+                }  if (sb.toString().equalsIgnoreCase(correctWord)) {
+
+                    wordGuessed = true;
+                    System.out.println("Congratulations, you won!");
+                    System.out.println("Press any key to restart");
+                    userInput = sc.nextLine().charAt(0);
+
+                    GameLoop.start();
+
                 }
+
+                } else if (!correctWord.contains(userInput.toString()) && userInput != '-' ) {
+                System.out.println("Wrong Guess!");
                 triesAllowed --;
 
-                } else if (!correctWord.contains(userInput.toString())) {
-                System.out.println("Wrong Guess! Try Again!");
-                triesAllowed --;
 
             } else if (userInput == '-') {
                 minusPressed = true;
+
+                System.out.println("You have Decided to QUIT");
             }
+
 
 
         }
